@@ -49,4 +49,17 @@ $(function () {
             performCheck($container, checks[i], password);
         }
     });
+
+    $('.js-sfpwh-password-toggle').on('click', function () {
+        var $container = $(this).parents('.password_with_hints'),
+            $input = $('.js-sfpwh-input', $container),
+            type = $input.attr('type');
+        $(this).toggleClass('sfpwh-password-toggle-revealed');
+        // $(this).toggleClass('fa-eye-slash');
+        if (type === 'text') {
+            $input.attr('type', 'password');
+        } else {
+            $input.attr('type', 'text');
+        }
+    });
 });

@@ -21,9 +21,9 @@ class PasswordWithHintsInput < SimpleForm::Inputs::Base
 
   def password_uncloaking_div
     template.content_tag(
-      :i,
+      :span,
       '',
-      class: 'far fa-eye password-toggle js-password-toggle'
+      class: 'sfpwh-password-toggle js-sfpwh-password-toggle'
     ) if options[:allow_password_uncloaking]
   end
 
