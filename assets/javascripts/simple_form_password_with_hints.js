@@ -38,6 +38,18 @@ $(function () {
                     $check.addClass('sfpwh-hint--invalid');
                 }
             }
+        },
+        compareFields = function(e) {
+            var $field = $(e.data.$field),
+                $target = $(e.data.$target),
+                $container = $field.parents('.password_with_sync'),
+                $check = $('.js-sfpwh-hint-match', $container);
+
+            if ($field.val() !== '' && $field.val() == $target.val()) {
+                $check.removeClass('sfpwh-hint--invalid');
+            } else {
+                $check.addClass('sfpwh-hint--invalid');
+            }
         };
 
     $('.js-sfpwh-input').on('input', function () {
@@ -61,5 +73,14 @@ $(function () {
         } else {
             $input.attr('type', 'text');
         }
+    });
+
+    $('.js-sfpwh-input-sync').each(function (index, value) {
+        var $field = $(value),
+            $form = $field.parents('form'),
+            $target = $('input[name="' + $field.data('link-to') + '"]', $form);
+
+        $field.on('input', { $field: $field, $target: $target }, compareFields);
+        $target.on('input', { $field: $field, $target: $target }, compareFields);
     });
 });

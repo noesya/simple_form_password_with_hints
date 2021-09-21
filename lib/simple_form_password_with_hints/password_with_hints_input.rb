@@ -4,19 +4,17 @@ class PasswordWithHintsInput < SimpleForm::Inputs::Base
   def input(wrapper_options = nil)
     merged_input_options = merge_wrapper_options(input_html_options, wrapper_options)
     merged_input_options[:class] << " js-sfpwh-input "
-    # template.content_tag :div, class: 'sfpwh-container js-sfpwh-container' do
-      @builder.password_field(attribute_name, merged_input_options) +
-        password_uncloaking_div +
-        template.content_tag(:div, '', class: 'sfpwh-controls js-sfpwh-controls') do
-          [
-            length_div,
-            uppercase_div,
-            lowercase_div,
-            numeric_div,
-            special_char_div
-          ].compact.join.html_safe
-        end
-    # end
+    @builder.password_field(attribute_name, merged_input_options) +
+      password_uncloaking_div +
+      template.content_tag(:div, '', class: 'sfpwh-controls js-sfpwh-controls') do
+        [
+          length_div,
+          uppercase_div,
+          lowercase_div,
+          numeric_div,
+          special_char_div,
+        ].compact.join.html_safe
+      end
   end
 
   def password_uncloaking_div
@@ -32,7 +30,7 @@ class PasswordWithHintsInput < SimpleForm::Inputs::Base
       :span,
       t('simple_form_password_with_hints.test_chars', min_length: options[:validators][:length]),
       data: { length: options[:validators][:length] },
-      class: 'sfpwh-hint sfpwh-hint--invalid sfpwh-hint--uppercase js-sfpwh-hint-length'
+      class: 'sfpwh-hint sfpwh-hint--invalid sfpwh-hint--length js-sfpwh-hint-length'
     ) if should_display?(:length)
   end
 
@@ -48,7 +46,7 @@ class PasswordWithHintsInput < SimpleForm::Inputs::Base
     template.content_tag(
       :span,
       t('simple_form_password_with_hints.test_lowercase'),
-      class: 'sfpwh-hint sfpwh-hint--invalid sfpwh-hint--uppercase js-sfpwh-hint-lowercase'
+      class: 'sfpwh-hint sfpwh-hint--invalid sfpwh-hint--lowercase js-sfpwh-hint-lowercase'
     ) if should_display?(:lowercase_char)
   end
 
@@ -56,7 +54,7 @@ class PasswordWithHintsInput < SimpleForm::Inputs::Base
     template.content_tag(
       :span,
       t('simple_form_password_with_hints.test_numeric'),
-      class: 'sfpwh-hint sfpwh-hint--invalid sfpwh-hint--uppercase js-sfpwh-hint-number'
+      class: 'sfpwh-hint sfpwh-hint--invalid sfpwh-hint--number js-sfpwh-hint-number'
     ) if should_display?(:numeric_char)
   end
 
@@ -65,7 +63,7 @@ class PasswordWithHintsInput < SimpleForm::Inputs::Base
       :span,
       t('simple_form_password_with_hints.test_special_char'),
       data: { chars: options[:validators][:special_char] },
-      class: 'sfpwh-hint sfpwh-hint--invalid sfpwh-hint--uppercase js-sfpwh-hint-special'
+      class: 'sfpwh-hint sfpwh-hint--invalid sfpwh-hint--special js-sfpwh-hint-special'
     ) if should_display?(:special_char)
   end
 

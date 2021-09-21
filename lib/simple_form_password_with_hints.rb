@@ -1,4 +1,5 @@
 require 'simple_form_password_with_hints/password_with_hints_input'
+require 'simple_form_password_with_hints/password_with_sync_input'
 
 module SimpleFormPasswordWithHints
   def self.add_paths!
