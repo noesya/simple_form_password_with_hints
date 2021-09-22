@@ -20,6 +20,18 @@ Run the following command to install it:
 bundle install
 ```
 
+Add it to your application.sass:
+
+```
+@import 'simple_form_password_with_hints'
+```
+
+Add it to your application.js:
+
+```
+//= require simple_form_password_with_hints
+```
+
 ### Bootstrap
 
 **Simple Form Password With Hints** relies on the [Bootstrap](http://getbootstrap.com/) markup, so it presumes that you installed Simple Form with the Bootstrap option. To do that you have to use the `bootstrap` option in the Simple Form install generator, like this:
@@ -142,4 +154,4 @@ https://github.com/noesya/simple_form_password_with_hints/issues
 
 ## License
 
-MIT License. 
+MIT License.

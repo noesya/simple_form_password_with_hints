@@ -1,0 +1,8 @@
+fr:
+  simple_form_password_with_hints:
+    test_chars: "%{min_length} caractères minimum"
+    test_uppercase: 'Majuscule'
+    test_lowercase: 'Minuscule'
+    test_numeric: 'Chiffre'
+    test_special_char: 'Caractère spécial'
+    test_fields_matching: 'Champs similaires'
