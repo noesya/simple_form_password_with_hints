@@ -2,7 +2,9 @@
 $(function () {
     'use strict';
     var getCheckRegex = function (key, $check) {
-            var regex, min, chars;
+            var regex,
+                min,
+                chars;
             switch (key) {
             case 'uppercase':
                 regex = '[A-Z]';
@@ -39,13 +41,13 @@ $(function () {
                 }
             }
         },
-        compareFields = function(e) {
+        compareFields = function (e) {
             var $field = $(e.data.$field),
                 $target = $(e.data.$target),
                 $container = $field.parents('.password_with_sync'),
                 $check = $('.js-sfpwh-hint-match', $container);
 
-            if ($field.val() !== '' && $field.val() == $target.val()) {
+            if ($field.val() !== '' && $field.val() === $target.val()) {
                 $check.removeClass('sfpwh-hint--invalid');
             } else {
                 $check.addClass('sfpwh-hint--invalid');
