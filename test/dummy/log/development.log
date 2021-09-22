@@ -3670,3 +3670,30 @@ Processing by Devise::RegistrationsController#new as HTML
 Completed 200 OK in 1725ms (Views: 1696.0ms | ActiveRecord: 15.2ms | Allocations: 219368)
 
 
+DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <main> at /Users/pabois/Dev/simple_form_password_with_hints/test/dummy/config/initializers/simple_form.rb:176)
+Started GET "/users/sign_up" for ::1 at 2021-09-22 14:24:48 +0200
+  [1m[35m (2.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Devise::RegistrationsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering devise/registrations/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (Duration: 0.9ms | Allocations: 533)
+  Rendered devise/registrations/new.html.erb within layouts/application (Duration: 17.4ms | Allocations: 11160)
+  Rendered layout layouts/application.html.erb (Duration: 47.9ms | Allocations: 29912)
+Completed 200 OK in 81ms (Views: 51.7ms | ActiveRecord: 16.5ms | Allocations: 38650)
+
+
+DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <main> at /Users/pabois/Dev/simple_form_password_with_hints/test/dummy/config/initializers/simple_form.rb:176)
+DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <main> at /Users/pabois/Dev/simple_form_password_with_hints/test/dummy/config/initializers/simple_form.rb:176)
+Started GET "/users/sign_up" for ::1 at 2021-09-22 14:26:40 +0200
+  [1m[35m (1.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Devise::RegistrationsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering devise/registrations/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (Duration: 0.8ms | Allocations: 495)
+  Rendered devise/registrations/new.html.erb within layouts/application (Duration: 17.6ms | Allocations: 10486)
+  Rendered layout layouts/application.html.erb (Duration: 60.7ms | Allocations: 29238)
+Completed 200 OK in 92ms (Views: 64.4ms | ActiveRecord: 15.1ms | Allocations: 37811)
+
+
+DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <main> at /Users/pabois/Dev/simple_form_password_with_hints/test/dummy/config/initializers/simple_form.rb:176)
+DEPRECATION WARNING: [SIMPLE_FORM] SimpleForm.form_class= is deprecated and will be removed in 4.x. Use SimpleForm.default_form_class= instead (called from block in <main> at /Users/pabois/Dev/simple_form_password_with_hints/test/dummy/config/initializers/simple_form.rb:176)

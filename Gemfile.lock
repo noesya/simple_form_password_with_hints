@@ -115,6 +115,7 @@ GEM
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    pg (1.2.3)
     popper_js (1.16.0)
     racc (1.5.2)
     rack (2.2.3)
@@ -192,6 +193,8 @@ DEPENDENCIES
   devise
   jquery-rails
   listen
+  pg (~> 1.1)
+  simple_form
   simple_form_password_with_hints!
   sqlite3
 
