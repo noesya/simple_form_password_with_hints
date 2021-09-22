@@ -1,0 +1,36 @@
+<h2>Sign up</h2>
+
+<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), :html => {:class => 'form-horizontal' }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :email,
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "email" }%>
+    <%= f.input :password,
+                as: :password_with_hints,
+                required: true,
+                input_html: { autocomplete: "password" },
+                allow_password_uncloaking: true,
+                validators: {
+                  length: Devise.password_length.first,
+                  uppercase_char: true,
+                  lowercase_char: true,
+                  numeric_char: true,
+                  special_char: Rails.application.config.allowed_special_chars
+                } %>
+    <%= f.input :password_confirmation,
+                as: :password_with_sync,
+                allow_password_uncloaking: true,
+                compare_with_field: :password,
+                required: true,
+                input_html: { autocomplete: "new-password" } %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Sign up" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>

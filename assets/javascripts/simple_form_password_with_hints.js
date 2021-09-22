@@ -69,7 +69,6 @@ $(function () {
             $input = $('.js-sfpwh-input', $container),
             type = $input.attr('type');
         $(this).toggleClass('sfpwh-password-toggle-revealed');
-        // $(this).toggleClass('fa-eye-slash');
         if (type === 'text') {
             $input.attr('type', 'password');
         } else {

@@ -17,7 +17,9 @@ Gem::Specification.new do |s|
     'https://github.com/noesya/simple_form_password_with_hints'
   s.license       = 'MIT'
 
-  s.add_development_dependency "rails", '>= 5.2.0', '< 7'
-  s.add_runtime_dependency "bootstrap"
-  s.add_runtime_dependency "simple_form"
+  s.add_dependency "rails"
+  s.add_dependency "simple_form"
+
+  s.add_development_dependency "listen"
+  s.add_development_dependency "sqlite3"
 end
