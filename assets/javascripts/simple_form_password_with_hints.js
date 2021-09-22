@@ -52,7 +52,7 @@ $(function () {
             }
         };
 
-    $('.js-sfpwh-input').on('input', function () {
+    $('.js-sfpwh-hints-input').on('input', function () {
         var $container = $(this).parents('.password_with_hints'),
             checks = ['length', 'uppercase', 'lowercase', 'number', 'special'],
             password = $(this).val(),
@@ -63,7 +63,7 @@ $(function () {
     });
 
     $('.js-sfpwh-password-toggle').on('click', function () {
-        var $container = $(this).parents('.password_with_hints'),
+        var $container = $(this).parents('.password_with_hints, .password_with_sync'),
             $input = $('.js-sfpwh-input', $container),
             type = $input.attr('type');
         $(this).toggleClass('sfpwh-password-toggle-revealed');
@@ -75,7 +75,7 @@ $(function () {
         }
     });
 
-    $('.js-sfpwh-input-sync').each(function (index, value) {
+    $('.js-sfpwh-sync-input').each(function (index, value) {
         var $field = $(value),
             $form = $field.parents('form'),
             $target = $('input[name="' + $field.data('link-to') + '"]', $form);
