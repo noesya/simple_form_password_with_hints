@@ -140,5 +140,7 @@ Element.prototype.parent = function (selector) {
             return regex;
         }
     };
-    simpleFormPasswordWithHints.init();
+    document.addEventListener('DOMContentLoaded', function () {
+        simpleFormPasswordWithHints.init();
+    });
 }());
