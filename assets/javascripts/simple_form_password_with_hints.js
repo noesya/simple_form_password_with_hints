@@ -1,10 +1,120 @@
-/*global $, RegExp */
-$(function () {
+Element.prototype.parents = function (selector) {
     'use strict';
-    var getCheckRegex = function (key, $check) {
+
+    var elements = [],
+        // eslint-disable-next-line consistent-this
+        elem = this,
+        ishaveselector = typeof selector !== 'undefined';
+
+    while ((elem = elem.parentElement) !== null) {
+        if (elem.nodeType !== Node.ELEMENT_NODE) {
+            continue;
+        }
+
+        if (!ishaveselector || elem.matches(selector)) {
+            elements.push(elem);
+        }
+    }
+
+    return elements;
+};
+
+Element.prototype.parent = function (selector) {
+    'use strict';
+    var elements = this.parents(selector);
+
+    if (elements.length > 0) {
+        return elements[0];
+    } else {
+        return null;
+    }
+};
+
+(function () {
+    'use strict';
+    var simpleFormPasswordWithHints = {
+        init: function () {
+            var inputs = document.querySelectorAll('.js-sfpwh-hints-input'),
+                togglers = document.querySelectorAll('.js-sfpwh-password-toggle'),
+                syncInputs = document.querySelectorAll('.js-sfpwh-sync-input'),
+                i = 0;
+
+            this.listen(inputs, 'input', this.onInput.bind(this));
+            this.listen(togglers, 'click', this.onClickToggler);
+
+            for (i = 0; i < syncInputs.length; i +=1) {
+                this.bindEquality(syncInputs[i]);
+            }
+        },
+
+        listen: function (elements, action, callback) {
+            var i;
+            for (i = 0; i < elements.length; i +=1) {
+                elements[i].addEventListener(action, callback.bind(this, elements[i]));
+            }
+        },
+
+        onInput: function (element) {
+            var container = element.parent('.password_with_hints'),
+                checks = ['length', 'uppercase', 'lowercase', 'number', 'special'],
+                i;
+            for (i = 0; i < checks.length; i += 1) {
+                this.check(container, checks[i], element.value);
+            }
+        },
+
+        check: function (container, key, value) {
+            var check = container.querySelector('.js-sfpwh-hint-' + key),
+                regexKey = this.getRegex(key, check),
+                regex = new RegExp(regexKey);
+
+            if (check) {
+                if (value.match(regex)) {
+                    check.classList.remove('sfpwh-hint--invalid');
+                } else {
+                    check.classList.add('sfpwh-hint--invalid');
+                }
+            }
+        },
+
+        bindEquality: function (input) {
+            var form = input.parent('form'),
+                target = form.querySelector('input[name="' + input.getAttribute('data-link-to') + '"]');
+            input.addEventListener('input', this.compare.bind(this, input, target));
+            target.addEventListener('input', this.compare.bind(this, input, target));
+        },
+
+        compare: function (field, target) {
+            var container = field.parent('.password_with_sync'),
+                check;
+
+            if (container) {
+                check = container.querySelector('.js-sfpwh-hint-match');
+            }
+
+            if (field.value !== '' && field.value === target.value) {
+                check.classList.remove('sfpwh-hint--invalid');
+            } else {
+                check.classList.add('sfpwh-hint--invalid');
+            }
+        },
+
+        onClickToggler: function (element) {
+            var container = element.parent('.password_with_hints, .password_with_sync'),
+                input = container.querySelector('.js-sfpwh-input');
+
+            element.classList.toggle('sfpwh-password-toggle-revealed');
+
+            input.type = input.type === 'text' ? 'password' : 'text';
+        },
+
+        // HELPERS
+
+        getRegex: function (key, element) {
             var regex,
                 min,
                 chars;
+
             switch (key) {
             case 'uppercase':
                 regex = '[A-Z]';
@@ -17,71 +127,18 @@ $(function () {
                 break;
             case 'special':
                 // hyphen must be at the end
-                chars = $check.data('chars');
+                chars = element.getAttribute('data-chars');
                 regex = '[' + chars + ']';
                 break;
             case 'length':
-                min = $check.data('length');
+                min = element.getAttribute('data-length');
                 regex = '.{' + min + ',128}';
                 break;
             default:
                 break;
             }
             return regex;
-        },
-        performCheck = function ($container, key, password) {
-            var $check = $('.js-sfpwh-hint-' + key, $container),
-                regexKey = getCheckRegex(key, $check),
-                regex = new RegExp(regexKey);
-            if ($check.length) {
-                if (password.match(regex)) {
-                    $check.removeClass('sfpwh-hint--invalid');
-                } else {
-                    $check.addClass('sfpwh-hint--invalid');
-                }
-            }
-        },
-        compareFields = function (e) {
-            var $field = $(e.data.$field),
-                $target = $(e.data.$target),
-                $container = $field.parents('.password_with_sync'),
-                $check = $('.js-sfpwh-hint-match', $container);
-
-            if ($field.val() !== '' && $field.val() === $target.val()) {
-                $check.removeClass('sfpwh-hint--invalid');
-            } else {
-                $check.addClass('sfpwh-hint--invalid');
-            }
-        };
-
-    $('.js-sfpwh-hints-input').on('input', function () {
-        var $container = $(this).parents('.password_with_hints'),
-            checks = ['length', 'uppercase', 'lowercase', 'number', 'special'],
-            password = $(this).val(),
-            i;
-        for (i = 0; i < checks.length; i += 1) {
-            performCheck($container, checks[i], password);
         }
-    });
-
-    $('.js-sfpwh-password-toggle').on('click', function () {
-        var $container = $(this).parents('.password_with_hints, .password_with_sync'),
-            $input = $('.js-sfpwh-input', $container),
-            type = $input.attr('type');
-        $(this).toggleClass('sfpwh-password-toggle-revealed');
-        if (type === 'text') {
-            $input.attr('type', 'password');
-        } else {
-            $input.attr('type', 'text');
-        }
-    });
-
-    $('.js-sfpwh-sync-input').each(function (index, value) {
-        var $field = $(value),
-            $form = $field.parents('form'),
-            $target = $('input[name="' + $field.data('link-to') + '"]', $form);
-
-        $field.on('input', { $field: $field, $target: $target }, compareFields);
-        $target.on('input', { $field: $field, $target: $target }, compareFields);
-    });
-});
+    };
+    simpleFormPasswordWithHints.init();
+}());
