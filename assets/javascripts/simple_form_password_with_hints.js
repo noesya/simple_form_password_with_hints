@@ -32,12 +32,20 @@ Element.prototype.parent = function (selector) {
 
 (function () {
     'use strict';
-    var simpleFormPasswordWithHints = {
+    var initialized = false,
+        simpleFormPasswordWithHints;
+
+    simpleFormPasswordWithHints = {
         init: function () {
             var inputs = document.querySelectorAll('.js-sfpwh-hints-input'),
                 togglers = document.querySelectorAll('.js-sfpwh-password-toggle'),
                 syncInputs = document.querySelectorAll('.js-sfpwh-sync-input'),
                 i = 0;
+
+            if (initialized) {
+                return false;
+            }
+            initialized = true;
 
             this.listen(inputs, 'input', this.onInput.bind(this));
             this.listen(togglers, 'click', this.onClickToggler);
@@ -140,7 +148,12 @@ Element.prototype.parent = function (selector) {
             return regex;
         }
     };
-    document.addEventListener('DOMContentLoaded', function () {
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
         simpleFormPasswordWithHints.init();
-    });
+    } else {
+        window.addEventListener('DOMContentLoaded', () => {
+            simpleFormPasswordWithHints.init();
+        });
+    }
 }());
