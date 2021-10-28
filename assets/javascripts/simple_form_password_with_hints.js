@@ -73,10 +73,12 @@ Element.prototype.parent = function (selector) {
 
         check: function (container, key, value) {
             var check = container.querySelector('.js-sfpwh-hint-' + key),
-                regexKey = this.getRegex(key, check),
-                regex = new RegExp(regexKey);
+                regexKey,
+                regex;
 
             if (check) {
+                regexKey = this.getRegex(key, check);
+                regex = new RegExp(regexKey);
                 if (value.match(regex)) {
                     check.classList.remove('sfpwh-hint--invalid');
                 } else {
