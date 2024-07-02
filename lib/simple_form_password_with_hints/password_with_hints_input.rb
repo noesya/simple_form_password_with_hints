@@ -1,22 +1,6 @@
 class PasswordWithHintsInput < SimpleForm::Inputs::Base
   enable :placeholder, :maxlength, :minlength
 
-  # def input(wrapper_options = nil)
-  #   merged_input_options = merge_wrapper_options(input_html_options, wrapper_options)
-  #   merged_input_options[:class] << " js-sfpwh-input js-sfpwh-hints-input "
-  #   @builder.password_field(attribute_name, merged_input_options) +
-  #     password_uncloaking_div +
-  #     template.content_tag(:div, '', class: 'sfpwh-controls js-sfpwh-controls') do
-  #       [
-  #         length_div,
-  #         uppercase_div,
-  #         lowercase_div,
-  #         numeric_div,
-  #         special_char_div,
-  #       ].compact.join.html_safe
-  #     end
-  # end
-
   def input(wrapper_options = nil)
     merged_input_options = merge_wrapper_options(input_html_options, wrapper_options)
     merged_input_options[:class] << " js-sfpwh-input js-sfpwh-hints-input "
