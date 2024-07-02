@@ -24,16 +24,6 @@ class PasswordWithHintsInput < SimpleForm::Inputs::Base
     end
   end
 
-
-  # def input_with_uncloaking
-  #   template.content_tag(:div, '', class: 'sfpwh-input-field') do
-  #     [
-  #       @builder.password_field(attribute_name, merged_input_options),
-  #       password_uncloaking_div
-  #     ]
-  #   end
-  # end
-
   def password_uncloaking_div
     template.content_tag(
       :span,
