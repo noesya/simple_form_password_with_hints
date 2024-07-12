@@ -1,4 +1,4 @@
-class PasswordWithHintsInput < SimpleForm::Inputs::Base
+class PasswordWithHintsInput < ::SimpleForm::Inputs::Base
   enable :placeholder, :maxlength, :minlength
 
   def input(wrapper_options = nil)
@@ -12,7 +12,7 @@ class PasswordWithHintsInput < SimpleForm::Inputs::Base
     end ) + controls
   end
 
-  def controls 
+  def controls
     template.content_tag(:div, '', class: 'sfpwh-controls js-sfpwh-controls') do
       [
         length_div,
