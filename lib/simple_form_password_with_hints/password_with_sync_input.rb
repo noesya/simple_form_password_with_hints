@@ -1,4 +1,4 @@
-class PasswordWithSyncInput < SimpleForm::Inputs::Base
+class PasswordWithSyncInput < ::SimpleForm::Inputs::Base
   enable :placeholder, :maxlength, :minlength
 
   def input(wrapper_options = nil)
@@ -10,17 +10,24 @@ class PasswordWithSyncInput < SimpleForm::Inputs::Base
       else
         merged_input_options[:data][:link_to] = linked_field_name
       end
-      @builder.password_field(attribute_name, merged_input_options) +
-      password_uncloaking_div +
-      template.content_tag(:div, '', class: 'sfpwh-controls js-sfpwh-controls') do
-        template.content_tag(
-          :span,
-          t('simple_form_password_with_hints.test_fields_matching'),
-          class: 'sfpwh-hint sfpwh-hint--invalid sfpwh-hint--match js-sfpwh-hint-match'
-          )
-      end
+      ( template.content_tag(:div, '', class: 'sfpwh-input-div') do
+        [
+          @builder.password_field(attribute_name, merged_input_options) +
+          password_uncloaking_div
+        ].compact.join.html_safe
+      end ) + controls
     else
       @builder.password_field(attribute_name, merged_input_options)
+    end
+  end
+
+  def controls
+    template.content_tag(:div, '', class: 'sfpwh-controls js-sfpwh-controls') do
+      template.content_tag(
+        :span,
+        t('simple_form_password_with_hints.test_fields_matching'),
+        class: 'sfpwh-hint sfpwh-hint--invalid sfpwh-hint--match js-sfpwh-hint-match'
+        )
     end
   end
 
@@ -35,7 +42,4 @@ class PasswordWithSyncInput < SimpleForm::Inputs::Base
   def linked_field_name
     "#{@builder.object_name}[#{options[:compare_with_field]}]"
   end
-
-
-
 end
