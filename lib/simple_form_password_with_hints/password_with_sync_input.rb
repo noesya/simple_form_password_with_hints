@@ -4,13 +4,15 @@ class PasswordWithSyncInput < ::SimpleForm::Inputs::Base
   def input(wrapper_options = nil)
     merged_input_options = merge_wrapper_options(input_html_options, wrapper_options)
     merged_input_options[:class] << " js-sfpwh-input js-sfpwh-sync-input "
+    input_wrapper_class = 'sfpwh-input-div'
+    input_wrapper_class += ' sfpwh-input-div-invalid' if has_errors?
     if options[:compare_with_field]
       if merged_input_options[:data].nil?
         merged_input_options[:data] = { link_to: linked_field_name }
       else
         merged_input_options[:data][:link_to] = linked_field_name
       end
-      ( template.content_tag(:div, '', class: 'sfpwh-input-div') do
+      ( template.content_tag(:div, '', class: input_wrapper_class) do
         [
           @builder.password_field(attribute_name, merged_input_options) +
           password_uncloaking_div

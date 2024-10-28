@@ -4,7 +4,9 @@ class PasswordWithHintsInput < ::SimpleForm::Inputs::Base
   def input(wrapper_options = nil)
     merged_input_options = merge_wrapper_options(input_html_options, wrapper_options)
     merged_input_options[:class] << " js-sfpwh-input js-sfpwh-hints-input "
-    ( template.content_tag(:div, '', class: 'sfpwh-input-div') do
+    input_wrapper_class = 'sfpwh-input-div'
+    input_wrapper_class += ' sfpwh-input-div-invalid' if has_errors?
+    ( template.content_tag(:div, '', class: input_wrapper_class) do
       [
         @builder.password_field(attribute_name, merged_input_options),
         password_uncloaking_div
