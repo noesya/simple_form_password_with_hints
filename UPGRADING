@@ -1,0 +1,5 @@
+###################################
+#  NOTE FOR UPGRADING FROM 0.0.7  #
+###################################
+
+The eye icon is now correctly placed vertically, so if you had any overwrite to adjust the vertical position of the eye you should now remove it

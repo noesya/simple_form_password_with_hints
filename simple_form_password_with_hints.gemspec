@@ -12,6 +12,10 @@ Gem::Specification.new do |s|
   s.files         = Dir.chdir(File.expand_path('..', __FILE__)) do
     `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   end
+  if File.exist?('UPGRADING')
+    s.post_install_message = File.read("UPGRADING")
+  end
+  
   s.require_paths = ['lib']
   s.homepage    =
     'https://github.com/noesya/simple_form_password_with_hints'
