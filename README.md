@@ -147,6 +147,18 @@ possible to help us in fixing the potential bug. We also encourage you to help e
 
 https://github.com/noesya/simple_form_password_with_hints/issues
 
+## Testing
+
+```shell
+bundle install
+cd test/dummy
+bin/rails db:create db:migrate
+bin/rails server 
+````
+
+Manual test on the page http://localhost:3000/users/sign_up
+
+
 ## Maintainers
 
 * Pierre-André Boissinot (https://github.com/pabois)
