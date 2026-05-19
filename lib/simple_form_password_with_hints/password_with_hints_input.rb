@@ -37,10 +37,10 @@ class PasswordWithHintsInput < ::SimpleForm::Inputs::Base
   def length_div
     template.content_tag(
       :span,
-      t('simple_form_password_with_hints.test_chars', min_length: options[:validators][:length]),
-      data: { length: options[:validators][:length] },
+      t('simple_form_password_with_hints.test_length', minlength: options[:validators][:minlength], maxlength: options[:validators][:maxlength]),
+      data: { minlength: options[:validators][:minlength], maxlength: options[:validators][:maxlength] },
       class: 'sfpwh-hint sfpwh-hint--invalid sfpwh-hint--length js-sfpwh-hint-length'
-    ) if should_display?(:length)
+    ) if should_display?(:minlength)
   end
 
   def uppercase_div

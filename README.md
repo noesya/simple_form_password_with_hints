@@ -62,7 +62,7 @@ becomes
               uppercase_char: true,
               lowercase_char: true,
               numeric_char: true,
-              special_char: '#&@?!'
+              special_char: true
             } %>
 ```
 
@@ -92,8 +92,20 @@ Basically in your `User` model you will have to add a test like this:
 validate :password_complexity
 
 def password_complexity
-  # Regexp extracted from https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
-  return if password.blank? || password =~ /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!,@$%^&*+£µ-]).{8,70}$/
+  return if password.blank?
+
+  has_uppercase = password =~ /[A-Z]/
+  has_lowercase = password =~ /[a-z]/
+  has_number = password =~ /[0-9]/
+  has_special_char = password =~ /[^A-z0-9]/
+  is_right_length = (8..128).include?(password.length)
+
+  return if has_uppercase &&
+            has_lowercase &&
+            has_number &&
+            has_special_char &&
+            is_right_length
+
   errors.add :password, 'Your password is not strong enough'
 end
 ```
@@ -101,28 +113,28 @@ end
 This regex matches the validators:
 ```erb
 validators: {
-  length: 8,
+  minlength: 8,
+  maxlength: 128,
   uppercase_char: true,
   lowercase_char: true,
   numeric_char: true,
-  special_char: '#?!,@$%^&*+£µ-'
+  special_char: true,
 }
 ```
 
-If you use `Devise` you might want to use the gem setup directly. And maybe add the special chars list in the configuration.
-So in you `config/application.rb` you might add `config.allowed_special_chars = '#?!,@$%^&*+£µ-'`.
-And then your regex in the model file should look like that:
+If you use `Devise` you might want to use the gem setup directly. And then your validator in the model file should look like that:
 ```erb
-/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#{Rails.application.config.allowed_special_chars}]).{#{Devise.password_length.first},#{Devise.password_length.last}}$/
+is_right_length = Devise.password_length.include?(password.length)
 ```
 and the validator:
 ```erb
 validators: {
-  length: Devise.password_length.first,
+  minlength: Devise.password_length.first,
+  maxlength: Devise.password_length.last,
   uppercase_char: true,
   lowercase_char: true,
   numeric_char: true,
-  special_char: Rails.application.config.allowed_special_chars
+  special_char: true
 }
 ```
 
