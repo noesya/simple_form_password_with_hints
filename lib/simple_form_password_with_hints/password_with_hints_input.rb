@@ -43,7 +43,7 @@ class PasswordWithHintsInput < ::SimpleForm::Inputs::Base
 
       template.content_tag(
         :span,
-        t('simple_form_password_with_hints.test_chars', minlength:, maxlength:),
+        t('simple_form_password_with_hints.test_chars', min_length: minlength, max_length: maxlength),
         data: { minlength:, maxlength: },
         class: 'sfpwh-hint sfpwh-hint--invalid sfpwh-hint--length js-sfpwh-hint-length'
       ) 
