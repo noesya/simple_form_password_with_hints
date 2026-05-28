@@ -6,4 +6,5 @@
 /pkg/
 /spec/reports/
 /tmp/
-/test/dummy/tmp/
+
+.DS_Store

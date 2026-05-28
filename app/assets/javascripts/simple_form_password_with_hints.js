@@ -73,17 +73,37 @@ Element.prototype.parent = function (selector) {
 
         check: function (container, key, value) {
             var check = container.querySelector('.js-sfpwh-hint-' + key),
-                regexKey,
-                regex;
+                valid = true;
 
-            if (check) {
-                regexKey = this.getRegex(key, check);
-                regex = new RegExp(regexKey);
-                if (value.match(regex)) {
-                    check.classList.remove('sfpwh-hint--invalid');
-                } else {
-                    check.classList.add('sfpwh-hint--invalid');
-                }
+            if (!check) {
+                return
+            }
+
+            switch (key) {
+                case 'uppercase':
+                    valid = new RegExp('[A-Z]').test(value);
+                    break;
+                case 'lowercase':
+                    valid = new RegExp('[a-z]').test(value);
+                    break;
+                case 'number':
+                    valid = new RegExp('[0-9]').test(value);
+                    break;
+                case 'length':
+                    var min = check.getAttribute('data-minlength'),
+                        max = check.getAttribute('data-maxlength');
+                    valid = value.length >= min && value.length <= max;
+                    break;
+                case 'special':
+                    valid = new RegExp('[^A-z0-9]').test(value);
+                default:
+                    break;
+            }
+
+            if (valid) {
+                check.classList.remove('sfpwh-hint--invalid');
+            } else {
+                check.classList.add('sfpwh-hint--invalid');
             }
         },
 
@@ -117,38 +137,6 @@ Element.prototype.parent = function (selector) {
 
             input.type = input.type === 'text' ? 'password' : 'text';
         },
-
-        // HELPERS
-
-        getRegex: function (key, element) {
-            var regex,
-                min,
-                chars;
-
-            switch (key) {
-            case 'uppercase':
-                regex = '[A-Z]';
-                break;
-            case 'lowercase':
-                regex = '[a-z]';
-                break;
-            case 'number':
-                regex = '[0-9]';
-                break;
-            case 'special':
-                // hyphen must be at the end
-                chars = element.getAttribute('data-chars');
-                regex = '[' + chars + ']';
-                break;
-            case 'length':
-                min = element.getAttribute('data-length');
-                regex = '.{' + min + ',128}';
-                break;
-            default:
-                break;
-            }
-            return regex;
-        }
     };
 
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
