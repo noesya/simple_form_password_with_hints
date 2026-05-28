@@ -58,7 +58,8 @@ becomes
 <%= f.input :password,
             as: :password_with_hints,  
             validators: {
-              length: 6,
+              minlength: 8,
+              maxlength: 128,
               uppercase_char: true,
               lowercase_char: true,
               numeric_char: true,
